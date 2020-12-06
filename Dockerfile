@@ -1,14 +1,14 @@
-FROM linuxserver/radarr:latest
 FROM jrottenberg/ffmpeg:4.2-ubuntu as ffmpeg
+FROM linuxserver/radarr:latest
 
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
-
-# Add files from ffmpeg
-COPY --from=ffmpeg /usr/local/ /usr/local/
 
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Radarr
 ENV SMA_UPDATE false
+
+# Add files from ffmpeg
+COPY --from=ffmpeg /usr/local/ /usr/local/
 
 # get python3 and git, and install python libraries
 RUN \
