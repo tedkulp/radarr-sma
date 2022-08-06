@@ -12,12 +12,12 @@ COPY --from=ffmpeg /usr/local/ /usr/local/
 
 # get python3 and git, and install python libraries
 RUN \
-  apt-get update && \
-  apt-get install -y \
+  apk update && \
+  apk add \
     git \
     wget \
     python3 \
-    python3-pip && \
+    py3-pip && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
@@ -33,16 +33,14 @@ RUN \
   chmod g+x /usr/local/bin/ffmpeg && \
   chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
-  apt-get purge --auto-remove -y && \
-  apt-get clean && \
   rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
 RUN \
-	apt-get update -y && \
-	apt-get install -y --no-install-recommends libva-drm2 libva2 i965-va-driver && \
+	apk update && \
+	apk add libva libdrm libva-intel-driver && \
   rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \
